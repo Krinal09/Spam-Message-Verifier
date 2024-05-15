@@ -1,4 +1,9 @@
 streamlit
 requests
 nltk
+sklearn
+xgboost
+collections
+wordcloud
+matplotlib
 Gunicorn
