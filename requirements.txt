@@ -1,9 +1,3 @@
 streamlit
-requests
+string
 nltk
-sklearn
-xgboost
-collections
-wordcloud
-matplotlib
-Gunicorn
