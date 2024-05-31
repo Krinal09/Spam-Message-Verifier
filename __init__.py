@@ -4,14 +4,21 @@ import string
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+import os
 
-# Download the punkt tokenizer
-nltk.download('punkt')
-nltk.download('stopwords')
+# Download necessary NLTK data to a specific directory
+nltk_data_path = os.path.join(os.getcwd(), 'nltk_data')
+if not os.path.exists(nltk_data_path):
+    os.makedirs(nltk_data_path)
+
+nltk.data.path.append(nltk_data_path)
+
+nltk.download('punkt', download_dir=nltk_data_path)
+nltk.download('stopwords', download_dir=nltk_data_path)
 
 ps = PorterStemmer()
 
-# Stemming function
+# Stemming
 def transform_text(text):
     text = text.lower()
     text = nltk.word_tokenize(text)
@@ -40,13 +47,10 @@ def transform_text(text):
 tfidf = pickle.load(open('vectorizer.pkl', 'rb'))
 model = pickle.load(open('model.pkl', 'rb'))
 
-# Streamlit app title
 st.title("Spam Message Verifier System")
 
-# Input text area
 input_msg = st.text_area("Enter your message below:")
 
-# Button to trigger spam check
 if st.button('Click here to check'):
     # 1. Preprocess
     transformed_msg = transform_text(input_msg)
@@ -57,7 +61,7 @@ if st.button('Click here to check'):
     # 3. Predict
     result = model.predict(vector_input)[0]
     
-    # 4. Display result
+    # 4. Display
     if result == 1:
         st.header("Spam")
     else:
