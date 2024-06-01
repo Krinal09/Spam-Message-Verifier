@@ -1,24 +1,14 @@
 import streamlit as st
 import pickle
 import string
-import nltk
 from nltk.corpus import stopwords
+import nltk
 from nltk.stem.porter import PorterStemmer
-import os
-
-# Download necessary NLTK data to a specific directory
-nltk_data_path = os.path.join(os.getcwd(), 'nltk_data')
-if not os.path.exists(nltk_data_path):
-    os.makedirs(nltk_data_path)
-
-nltk.data.path.append(nltk_data_path)
-
-nltk.download('punkt', download_dir=nltk_data_path)
-nltk.download('stopwords', download_dir=nltk_data_path)
 
 ps = PorterStemmer()
 
-# Stemming
+# Stremming
+
 def transform_text(text):
     text = text.lower()
     text = nltk.word_tokenize(text)
@@ -43,22 +33,23 @@ def transform_text(text):
             
     return " ".join(y)
 
-# Load the vectorizer and model
-tfidf = pickle.load(open('vectorizer.pkl', 'rb'))
-model = pickle.load(open('model.pkl', 'rb'))
+tfidf = pickle.load(open('vectorizer.pkl','rb'))
+model = pickle.load(open('model.pkl','rb'))
+
 
 st.title("Spam Message Verifier System")
 
 input_msg = st.text_area("Enter your message below:")
-
+    
 if st.button('Click here to check'):
-    # 1. Preprocess
+
+    # 1. preprocess
     transformed_msg = transform_text(input_msg)
     
-    # 2. Vectorize
+    # 2. vectorize
     vector_input = tfidf.transform([transformed_msg])
     
-    # 3. Predict
+    # 3. predict
     result = model.predict(vector_input)[0]
     
     # 4. Display
