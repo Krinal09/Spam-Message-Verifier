@@ -5,12 +5,12 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
-# Set NLTK data path to a common location
-nltk.data.path.append("/usr/share/nltk_data")
+# Find NLTK data directory
+nltk.data.path.append(nltk.data.find('corpora'))
 
 # Download necessary NLTK data
-nltk.download('punkt', download_dir="/usr/share/nltk_data")
-nltk.download('stopwords', download_dir="/usr/share/nltk_data")
+nltk.download('punkt')
+nltk.download('stopwords')
 
 ps = PorterStemmer()
 
